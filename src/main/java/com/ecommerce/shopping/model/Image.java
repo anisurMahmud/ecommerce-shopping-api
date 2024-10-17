@@ -19,7 +19,9 @@ public class Image {
     private long id;
     private String fileName;
     private String fileType;
-    private Blob blob;
+
+    @Lob
+    private Blob image;
     private String url;
 
     @ManyToOne
