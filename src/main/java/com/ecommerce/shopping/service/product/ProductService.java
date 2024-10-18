@@ -1,5 +1,6 @@
 package com.ecommerce.shopping.service.product;
 
+import com.ecommerce.shopping.exception.ProductNotFoundException;
 import com.ecommerce.shopping.model.Product;
 import com.ecommerce.shopping.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,15 @@ public class ProductService implements IProductService {
 
     @Override
     public Product getProductById(long id) {
-        return null;
+        return productRepository.findById(id)
+                .orElseThrow(()-> new ProductNotFoundException("Product not found"));
     }
 
     @Override
     public void deleteProductById(long id) {
+        productRepository.findById(id)
+                .ifPresentOrElse(productRepository::delete,
+                        ()->{throw new ProductNotFoundException("Product not found");});
 
     }
 
