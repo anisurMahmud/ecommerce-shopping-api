@@ -2,18 +2,20 @@ package com.ecommerce.shopping.service.category;
 
 import com.ecommerce.shopping.model.Category;
 import com.ecommerce.shopping.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+//    public CategoryService(CategoryRepository categoryRepository) {
+//        this.categoryRepository = categoryRepository;
+//    }
 
     @Override
     public Category getCategoryById(long id) {
