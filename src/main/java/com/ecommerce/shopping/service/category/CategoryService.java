@@ -1,5 +1,6 @@
 package com.ecommerce.shopping.service.category;
 
+import com.ecommerce.shopping.exception.AlreadyExistsException;
 import com.ecommerce.shopping.exception.ResourceNotFoundException;
 import com.ecommerce.shopping.model.Category;
 import com.ecommerce.shopping.repository.CategoryRepository;
@@ -37,7 +38,9 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category addCategory(Category category) {
-        return null;
+        return Optional.of(category).filter(c -> !categoryRepository.existsByName(c.getName()))
+                .map(categoryRepository :: save)
+                .orElseThrow(()-> new AlreadyExistsException(category.getName()+" already exists"));
     }
 
     @Override
