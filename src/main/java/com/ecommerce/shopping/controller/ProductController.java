@@ -78,7 +78,8 @@ public class ProductController {
             }
             return ResponseEntity.ok(new ApiResponse("Success", productsByBrand));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
@@ -91,7 +92,8 @@ public class ProductController {
             }
             return ResponseEntity.ok(new ApiResponse("Success", productsByCategory));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
@@ -104,7 +106,8 @@ public class ProductController {
             }
             return ResponseEntity.ok(new ApiResponse("Success", productsByCategoryAndBrand));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
@@ -117,7 +120,8 @@ public class ProductController {
             }
             return ResponseEntity.ok(new ApiResponse("Success", productsByBrandAndName));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
@@ -130,20 +134,22 @@ public class ProductController {
             }
             return ResponseEntity.ok(new ApiResponse("Success", productsByName));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
-    @GetMapping("/product/total/")
-    public ResponseEntity<ApiResponse> getTotalProductByBrandAndName(@RequestParam String brand, @RequestParam String name) {
+    @GetMapping("/product/count/by-brand/and-name")
+    public ResponseEntity<ApiResponse> countProductByBrandAndName(@RequestParam String brand, @RequestParam String name) {
         try {
-            Long totalProductsByBrandAndName = productService.countProductsByBrandAndName(brand, name);
+            var totalProductsByBrandAndName = productService.countProductsByBrandAndName(brand, name);
             if(totalProductsByBrandAndName == null){
                 return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No Product", null));
             }
             return ResponseEntity.ok(new ApiResponse("Success", totalProductsByBrandAndName));
         } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            //return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
 
