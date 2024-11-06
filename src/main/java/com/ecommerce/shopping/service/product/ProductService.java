@@ -45,10 +45,10 @@ public class ProductService implements IProductService {
     private Product createProduct(AddProductRequest product, Category category) {
         return new Product(
                 product.getName(),
-                product.getBrand(),
+                product.getDescription(),
                 product.getPrice(),
                 product.getQuantity(),
-                product.getDescription(),
+                product.getBrand(),
                 category
         );
     }
