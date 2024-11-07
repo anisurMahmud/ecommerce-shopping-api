@@ -1,5 +1,6 @@
 package com.ecommerce.shopping.service.product;
 
+import com.ecommerce.shopping.dto.ProductDTO;
 import com.ecommerce.shopping.model.Product;
 import com.ecommerce.shopping.request.AddProductRequest;
 import com.ecommerce.shopping.request.UpdateProductRequest;
@@ -18,4 +19,8 @@ public interface IProductService {
     List<Product> getProductsByName(String name);
     List<Product> getProductsByBrandAndName(String brand, String name);
     Long countProductsByBrandAndName(String brand, String name);
+
+    List<ProductDTO> getConvertedProducts(List<Product> products);
+
+    ProductDTO convertToDto(Product product);
 }

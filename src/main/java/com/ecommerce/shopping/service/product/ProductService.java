@@ -1,13 +1,17 @@
 package com.ecommerce.shopping.service.product;
 
-import com.ecommerce.shopping.exception.ProductNotFoundException;
+import com.ecommerce.shopping.dto.ImageDTO;
+import com.ecommerce.shopping.dto.ProductDTO;
 import com.ecommerce.shopping.exception.ResourceNotFoundException;
 import com.ecommerce.shopping.model.Category;
+import com.ecommerce.shopping.model.Image;
 import com.ecommerce.shopping.model.Product;
 import com.ecommerce.shopping.repository.CategoryRepository;
+import com.ecommerce.shopping.repository.ImageRepository;
 import com.ecommerce.shopping.repository.ProductRepository;
 import com.ecommerce.shopping.request.AddProductRequest;
 import com.ecommerce.shopping.request.UpdateProductRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +22,17 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
+    private final ImageRepository imageRepository;
 
     public ProductService(
             ProductRepository productRepository,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository,
+            ModelMapper modelMapper, ImageRepository imageRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -45,10 +54,10 @@ public class ProductService implements IProductService {
     private Product createProduct(AddProductRequest product, Category category) {
         return new Product(
                 product.getName(),
-                product.getBrand(),
+                product.getDescription(),
                 product.getPrice(),
                 product.getQuantity(),
-                product.getDescription(),
+                product.getBrand(),
                 category
         );
     }
@@ -122,5 +131,21 @@ public class ProductService implements IProductService {
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand, name);
+    }
+
+    @Override
+    public List<ProductDTO> getConvertedProducts(List<Product> products){
+        return products.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public ProductDTO convertToDto(Product product){
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDTO> imageDTOS = images.stream()
+                .map(image -> modelMapper.map(image, ImageDTO.class))
+                .toList();
+        productDTO.setImages(imageDTOS);
+        return productDTO;
     }
 }
