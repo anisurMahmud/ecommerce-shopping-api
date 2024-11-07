@@ -8,6 +8,7 @@ import com.ecommerce.shopping.repository.CategoryRepository;
 import com.ecommerce.shopping.repository.ProductRepository;
 import com.ecommerce.shopping.request.AddProductRequest;
 import com.ecommerce.shopping.request.UpdateProductRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +19,15 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
 
     public ProductService(
             ProductRepository productRepository,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository,
+            ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
