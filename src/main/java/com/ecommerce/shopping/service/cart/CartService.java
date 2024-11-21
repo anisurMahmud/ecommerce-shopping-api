@@ -1,5 +1,6 @@
 package com.ecommerce.shopping.service.cart;
 
+import com.ecommerce.shopping.exception.ResourceNotFoundException;
 import com.ecommerce.shopping.model.Cart;
 import com.ecommerce.shopping.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,11 @@ public class CartService implements ICartService {
 
     @Override
     public Cart getCart(Long id) {
-        return null;
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Cart not found"));
+        BigDecimal totalAmount = cart.getTotalAmount();
+        cart.setTotalAmount(totalAmount);
+        return cartRepository.save(cart);
     }
 
     @Override
