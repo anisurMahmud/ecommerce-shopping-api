@@ -63,13 +63,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProductById(long id) {
+    public Product getProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
     }
 
     @Override
-    public void deleteProductById(long id) {
+    public void deleteProductById(Long id) {
         productRepository.findById(id)
                 .ifPresentOrElse(productRepository::delete,
                         ()->{throw new ResourceNotFoundException("Product not found");});
@@ -77,7 +77,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product updateProductById(UpdateProductRequest product, long id) {
+    public Product updateProductById(UpdateProductRequest product, Long id) {
         return productRepository.findById(id)
                 .map(existingProduct -> updateExistingProduct(existingProduct, product))
                 .map(productRepository :: save)
