@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{productId}/product")
-    public ResponseEntity<ApiResponse> getProductById(@PathVariable long productId) {
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
         try {
             Product product  = productService.getProductById(productId);
             ProductDTO convertedProduct = productService.convertToDto(product);
@@ -63,7 +63,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{productId}/delete")
-    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable long productId) {
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId) {
         try {
             productService.deleteProductById(productId);
             return ResponseEntity.ok(new ApiResponse("Delete Success", productId));
